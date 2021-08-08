@@ -103,9 +103,13 @@ router.post('/guardar', (req, res) => {
   productos.push(objProducto);
   dbIDs.push(lastID);
 
-  res.json({
-    objProducto,
-  });
+  if (body.form === 'true') {
+    res.redirect(301, '/');
+  } else {
+    res.json({
+      objProducto,
+    });
+  }
 });
 
 //Ruta para guardar un producto nuevo si se cumplen los parámetros necesarios.
