@@ -3,7 +3,6 @@ import path from 'path';
 import routerApi from './routes/api.js';
 import handlebars from 'express-handlebars';
 import { productos } from './routes/api.js';
-import { objToJSON } from './module/app.js';
 
 /** Configurando e Inicializando EXPRESS */
 const app = express();

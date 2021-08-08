@@ -7,9 +7,9 @@ const router = express.Router();
 /**
  * DATOS A MANIPULAR
  */
-export const productos = [];
-const dbIDs = [];
-let lastID = 0;
+export const productos = []; //Array de productos
+const dbIDs = []; //Array de los IDs de los productos
+let lastID = 0; //Ultimo ID de producto utilizado
 
 //Creando algunos Productos para pruebas
 //Comentar para verificar el error de no existen productos.
@@ -75,7 +75,7 @@ router.post('/guardar', (req, res) => {
       error: msg,
     });
   };
-  console.log(body);
+
   if (body.title === undefined) {
     errorGuardar('title no definido');
   }
@@ -103,6 +103,7 @@ router.post('/guardar', (req, res) => {
   productos.push(objProducto);
   dbIDs.push(lastID);
 
+  //Validando si el guarda es usado desde el form o via json/api
   if (body.form === 'true') {
     res.redirect(301, '/');
   } else {
@@ -112,7 +113,7 @@ router.post('/guardar', (req, res) => {
   }
 });
 
-//Ruta para guardar un producto nuevo si se cumplen los parámetros necesarios.
+//Ruta para actualizar un producto si se cumplen los parámetros necesarios.
 router.put('/productos/actualizar/:id', (req, res) => {
   const id = parseInt(req.params.id);
   const body = req.body;
@@ -133,28 +134,28 @@ router.put('/productos/actualizar/:id', (req, res) => {
 
   const indexID = dbIDs.findIndex((ID) => ID === id);
   if (indexID === -1) {
-    errorGuardar(msgErrorID);
     flagUpdate = false;
+    errorGuardar(msgErrorID);
   }
 
   if (body.title === undefined) {
-    errorGuardar(msgErrorParametros);
     flagUpdate = false;
+    errorGuardar(msgErrorParametros);
   }
 
   if (body.price === undefined) {
-    errorGuardar(msgErrorParametros);
     flagUpdate = false;
+    errorGuardar(msgErrorParametros);
   }
 
   if (isNaN(parseFloat(body.price))) {
-    errorGuardar(msgErrorParametros);
     flagUpdate = false;
+    errorGuardar(msgErrorParametros);
   }
 
   if (body.thumbnail === undefined) {
-    errorGuardar(msgErrorParametros);
     flagUpdate = false;
+    errorGuardar(msgErrorParametros);
   }
 
   if (flagUpdate) {
